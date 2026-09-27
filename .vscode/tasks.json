@@ -1,0 +1,28 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "NOVA: inspect environment",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-Command",
+				"$ErrorActionPreference='Continue'; '--- versions ---'; foreach ($name in @('node','npm','git','gh','docker','podman','pnpm','corepack')) { $cmd=Get-Command $name -ErrorAction SilentlyContinue; if ($cmd) { & $name --version 2>&1 | Select-Object -First 1 } else { \"$name : unavailable\" } }; '--- git state ---'; git status --short --branch 2>&1; '--- gh auth ---'; gh auth status 2>&1"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "NOVA environment check",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"--version"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "test"
+		}
+	]
+}
